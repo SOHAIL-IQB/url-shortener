@@ -17,6 +17,18 @@ const URLSchema = new mongoose.Schema({
     type: Number,
     default: new Date().getTime(),
   },
+  userId: {
+
+  },
+  openedAt: {
+
+  },
+  createdAt: {
+
+  },
+  createdAtLocation: {
+
+  }
 });
 
 const URLSModel = mongoose.model("urls", URLSchema);
