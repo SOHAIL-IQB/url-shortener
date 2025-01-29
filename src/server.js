@@ -1,14 +1,12 @@
 const express = require("express");
+const v1Router = require("./routers/v1/v1.router");
 require("dotenv").config();
 require("./db/connect");
-const { v1Router } = require("./routers/v1/index");
 const { RedirectURLController } = require("./controllers/url.controller");
 
 const NODE_ENV = process.env.NODE_ENV;
-
 const PORT = process.env[`${NODE_ENV}_PORT`];
 
-// const app = express()
 const server = express();
 
 // It will parse the body of the request into JSON

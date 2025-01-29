@@ -1,4 +1,4 @@
-const URLSModel = require("./../models/url.model");
+const URLSModel = require("./../models/urls.model");
 
 async function CreateNewURLService(originalUrl, keyId) {
   try {
@@ -12,8 +12,8 @@ async function CreateNewURLService(originalUrl, keyId) {
     }
 
     return {
-      success: true,
       data: result,
+      success: true,
     };
   } catch (err) {
     console.log(
