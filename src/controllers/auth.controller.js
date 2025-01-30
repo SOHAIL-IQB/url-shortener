@@ -4,7 +4,14 @@ const {
 } = require("./../utils/auth.utils");
 const {
   IsUserPresentUsingEmailService,
+  CreateNewUserService,
 } = require("./../services/user.service");
+const {
+  IsOrganizationPresentUsingOrgDomainService,
+  CreateNewOrganizationService,
+} = require("./../services/organization.service");
+
+const bcrypt = require("bcrypt");
 
 const SignupController = async (req, res) => {
   try {
@@ -53,19 +60,73 @@ const SignupController = async (req, res) => {
     } else {
       // if email is business/professional email
 
-      // TODO1 : from email extract the organization domain and name
+      // from email extract the organization domain and name
       const organizationDomain = emailDomain;
       const organizationName = emailDomain.split(".")[0].toUpperCase();
+      let organizationId;
 
-      // TODO2: check if organiztion is already created or not
+      // check if organiztion is already created or not
+      const IsOrganizationPresentUsingOrgDomainServiceResult =
+        await IsOrganizationPresentUsingOrgDomainService(organizationDomain);
 
-      // TODO3 : if organization is already created for the user, then use the existing organization detail
+      // if organization is already created for the user, then use the existing organization detail
       // otherwise create new organization
+      if (IsOrganizationPresentUsingOrgDomainServiceResult.success) {
+        // organization is already present
+        organizationId =
+          IsOrganizationPresentUsingOrgDomainServiceResult.data._id;
+      } else {
+        // organization is not present, then create organization
+        const CreateNewOrganizationServiceResult =
+          await CreateNewOrganizationService(
+            organizationDomain,
+            organizationName
+          );
+        if (!CreateNewOrganizationServiceResult.success) {
+          const err = new Error(
+            `Unable to create organization with name : ${organizationName} and domain : ${organizationDomain}`
+          );
+          err.statusCode = 500;
+          throw err;
+        }
+        organizationId = CreateNewOrganizationServiceResult.data._id;
+      }
 
       // TODO4 : create user
+
+      // convert password to encryptedPassword
+      const salt = await bcrypt.genSalt();
+      const encryptedPassword = await bcrypt.hash(password, salt);
+
+      const CreateNewUserServiceResult = await CreateNewUserService(
+        fullName,
+        email,
+        encryptedPassword,
+        organizationId
+      );
+
+      if (!CreateNewUserServiceResult.success) {
+        const err = new Error(`Unable to create user with email : ${email}`);
+        err.statusCode = 400;
+        throw err;
+      }
+
+      const {
+        fullName: fullNameDB,
+        email: emailDB,
+        organizationId: organizationIdDB,
+        _id: userId,
+      } = CreateNewUserServiceResult.data;
+
       res.status(201).json({
         success: true,
-        message: "Email is business",
+        message: "User is created",
+        data: {
+          fullname: fullNameDB,
+          email: emailDB,
+          organizationId: organizationIdDB,
+          userId,
+        },
       });
     }
   } catch (err) {
