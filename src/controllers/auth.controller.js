@@ -47,7 +47,7 @@ const SignupController = async (req, res)=>{
                 message : "Email is Personal"
             })
         }else{
-            // if email is business/professional email
+            // if email is business/professional email  /
 
             // TODO1 : from email extract the organization domain and name
 
