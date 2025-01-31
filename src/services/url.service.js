@@ -1,4 +1,4 @@
-const URLSModel = require("./../models/url.model");
+const URLSModel = require("./../models/urls.model");
 
 async function CreateNewURLService(originalUrl, keyId, userId) {
   try {
@@ -72,8 +72,32 @@ async function UpdateTheURLUsingMongoIdService(mongoId, city, country) {
   }
 }
 
+async function GetURLsOfTheUserUsingUserIdService(userId) {
+  try {
+    const URLS = await URLSModel.find({ userId: userId }).exec();
+
+    if (!URLS) {
+      throw new Error(`Unable to fetch URLS with userId : ${userId} `);
+    }
+
+    return {
+      success: true,
+      message: `${URLS.length} urls are sent`,
+      data: URLS,
+    };
+  } catch (err) {
+    console.log(
+      `Error in GetURLsOfTheUserUsingUserIdService with err : ${err}`
+    );
+    return {
+      success: false,
+    };
+  }
+}
+
 module.exports = {
   CreateNewURLService,
   GetURLDetailsUsingItsKeyIdService,
   UpdateTheURLUsingMongoIdService,
+  GetURLsOfTheUserUsingUserIdService,
 };
