@@ -70,6 +70,7 @@ const SignupController = async (req, res) => {
       const organizationDomain = emailDomain;
       const organizationName = emailDomain.split(".")[0].toUpperCase();
       let organizationId;
+      let organizationRole = "ORG_MEMBER";
 
       // check if organiztion is already created or not
       const IsOrganizationPresentUsingOrgDomainServiceResult =
@@ -96,6 +97,7 @@ const SignupController = async (req, res) => {
           throw err;
         }
         organizationId = CreateNewOrganizationServiceResult.data._id;
+        organizationRole = "ORG_ADMIN";
       }
 
       // TODO4 : create user
@@ -108,7 +110,8 @@ const SignupController = async (req, res) => {
         fullName,
         email,
         encryptedPassword,
-        organizationId
+        organizationId,
+        organizationRole
       );
 
       if (!CreateNewUserServiceResult.success) {
@@ -176,6 +179,7 @@ const SigninController = async (req, res) => {
         password: encryptedPasswordInDB,
         _id: userIdInDB,
         organizationId: organizationIdInDB,
+        role: roleInDB,
       },
     } = IsUserPresentUsingEmailServiceResult;
 
@@ -190,6 +194,7 @@ const SigninController = async (req, res) => {
     // generate token for the user, and return back the token to the user
     const payload = {
       userId: userIdInDB,
+      role: roleInDB,
     };
 
     const token = await jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "5m" });
