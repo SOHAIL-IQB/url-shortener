@@ -15,7 +15,6 @@ const PORT = process.env[`${NODE_ENV}_PORT`];
 const CreateNewURLController = async (req, res) => {
   try {
     const userId = req.userId;
-
     const { originalURL } = req.body;
 
     if (!originalURL) {
