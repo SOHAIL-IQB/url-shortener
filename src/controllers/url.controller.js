@@ -3,13 +3,13 @@ const {
   GetURLDetailsUsingItsKeyIdService,
   UpdateTheURLUsingMongoIdService,
 } = require("./../services/url.service");
+
 const { GenerateUniqueIdForTheURLUtil } = require("./../utils/url.utils");
 require("dotenv").config();
 
 const geoip = require("geoip-lite");
 
 const NODE_ENV = process.env.NODE_ENV;
-
 const PORT = process.env[`${NODE_ENV}_PORT`];
 
 const CreateNewURLController = async (req, res) => {
