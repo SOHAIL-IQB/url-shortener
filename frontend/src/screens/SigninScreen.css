@@ -1,0 +1,32 @@
+.signin-form-container :nth-child(4){
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.signin-screen > div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signin-form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap : 20px;
+    padding: 40px;
+}
+
+.signin-form-container > div:first-child{
+    display: flex;
+    flex-direction: column;
+    gap : 10px
+}
+
+
+.signin-screen {
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

@@ -1,0 +1,10 @@
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.navbar-container > div:nth-child(2){
+    display: flex;
+    gap : 20px;
+}

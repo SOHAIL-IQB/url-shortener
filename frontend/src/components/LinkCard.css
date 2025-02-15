@@ -1,0 +1,24 @@
+.link-stats {
+    display: flex;
+    gap : 10px;
+}
+
+.link-card {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;   
+    border-radius: 8px;
+}
+
+.link-details{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cta-groups{
+    display: flex;
+    gap : 4px
+}

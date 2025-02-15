@@ -1,0 +1,52 @@
+.outlined-primary-color {
+    background-color: transparent;
+    border-color: blue;
+    color: blue;
+}
+
+.outlined-secondary-color {
+    background-color: transparent;
+    border-color: orange;
+    color: orange;
+}
+
+.outlined-success-color {
+    background-color: transparent;
+    border-color: green;
+    color: green;
+}
+
+.outlined-danger-color {
+    background-color: transparent;
+    border-color: red;
+    color: red;
+}
+
+.outlined-small-size {
+    min-width: 64px;
+    min-height: 24px;
+    font-size: 12px;
+}
+
+.outlined-regular-size {
+    min-width: 80px;
+    min-height: 28px;
+    font-size: 14px;
+}
+
+.outlined-medium-size {
+    min-width: 96px;
+    min-height: 32px;
+    font-size: 16px;
+}
+
+.outlined-large-size {
+    min-width: 112px;
+    min-height: 36px;
+    font-size: 18px;
+}
+
+
+button {
+    border-radius: 4px;
+}
